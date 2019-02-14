@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/colorRedDarkLight</color>
+    <color name="colorPrimaryDark">@color/colorRedDark</color>
+    <color name="colorAccent">@color/colorYellowLight</color>
+    <color name="colorRedDark">#800000</color>
+    <color name="colorRedDarkLight">#a71d1d</color>
+    <color name="colorOrangeLight">#e5f7a100</color>
+    <color name="colorOrangeDarkLight">#edda8d07</color>
+    <color name="colorYellowLight">#ffe748</color>
+    <color name="colorYellowLightDark">#dfc200</color>
+    <color name="colorYellowDarkLight">#e4c601</color>
+    <color name="colorButtonLight">#e9edf5</color>
+    <color name="colorButtonDark">#b1b3b9</color>
+    <color name="colorButtonDarkLight">#4f3cb6</color>
+    <color name="colorButtonDarkDark">#2c1c87</color>
+    <color name="colorYellowDark">#b69e00</color>
+</resources>

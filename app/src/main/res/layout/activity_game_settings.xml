@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameSettingsActivity"
+    android:background="@android:color/black">
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="119dp"
+        android:layout_height="61dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/background_menu_button"
+        android:text="Start"
+        android:textAllCaps="false"
+        android:textColor="@color/colorButtonLight"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/background_menu_button"
+        android:text="Back"
+        android:textAllCaps="false"
+        android:textColor="@color/colorButtonLight"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="onBackClicked"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="10dp"
+            android:text="Match Settings"
+            android:textAlignment="center"
+            android:textColor="@color/colorButtonLight"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Score:"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textSize="24sp" />
+
+        <Spinner
+            android:id="@+id/spin_score"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_red_dark" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/txt_sets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sets:"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textSize="24sp" />
+
+        <SeekBar
+            android:id="@+id/sbar_sets"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_menu_button"
+            android:max="12" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/txt_legs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Legs per Set:"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textSize="24sp" />
+
+        <SeekBar
+            android:id="@+id/sbar_legs"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_menu_button"
+            android:max="10" />
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
