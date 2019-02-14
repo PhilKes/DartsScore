@@ -1,1 +1,3 @@
 # DartsScore
+    Dart Scoreboard App for Android
+    -Including Statistics database tracking Average,Doubles,...
