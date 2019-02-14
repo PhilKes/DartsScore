@@ -42,9 +42,7 @@ public class PlayerAdapter extends BaseAdapter {
         }
         Player p=listPlayers.get(i);
         TextView txtPlayer=view.findViewById(R.id.txt_name);
-
         txtPlayer.setText(p.name);
-        //txtPlayer.setOnClickListener(listener);
 
         return view;
     }

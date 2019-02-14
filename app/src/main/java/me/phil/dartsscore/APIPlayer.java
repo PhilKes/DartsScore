@@ -20,9 +20,8 @@ public class APIPlayer {
             database=new DBPlayer(context);
     }
 
-    /** USER API **/
+
     public long createPlayer(String name){
-        /**Do not create user if name already exists**/
         if(queryPlayer(name).size()>0) {
             Log.d(TAG, "createPlayer: COULD NOT CREATE Player\tName: "+name+" already exists");
             return -1;

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class PlayerStatsAdapter extends BaseAdapter {
     ArrayList<Player> listPlayers;
-    View.OnClickListener listener;
     public PlayerStatsAdapter(ArrayList<Player> listPlayers) {
         this.listPlayers = listPlayers;
     }

@@ -1,6 +1,5 @@
-package me.phil.dartsscore;
+package me.phil.dartsscore.activites;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -11,24 +10,24 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
+import me.phil.dartsscore.Player;
+import me.phil.dartsscore.R;
 
+/** Score,Sets,Legs settings for new Match **/
 public class GameSettingsActivity extends AppCompatActivity {
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_settings);
         ArrayList<Player> players=this.getIntent().getParcelableArrayListExtra("players");
         int firstIdx=getIntent().getIntExtra("first",0);
+        /** Spinner for Score selection **/
         Integer[] scores={501,301,201,701,1001};
         Spinner spinner=findViewById(R.id.spin_score);
         spinner.setAdapter(new ArrayAdapter<Integer>(this,R.layout.spinner_score_item,scores));
         spinner.setSelection(1);
+        /** SeekBars for Sets,Legs **/
         SeekBar barSets=findViewById(R.id.sbar_sets);
         barSets.setProgress(2);
         SeekBar barLegs=findViewById(R.id.sbar_legs);
@@ -36,12 +35,12 @@ public class GameSettingsActivity extends AppCompatActivity {
             barSets.setMin(1);
             barLegs.setMin(1);
         }
-
         barLegs.setProgress(2);
         TextView txtSets=findViewById(R.id.txt_sets);
         txtSets.setText("Sets: "+barSets.getProgress());
         TextView txtLegs=findViewById(R.id.txt_legs);
         txtLegs.setText("Legs per Set: "+barLegs.getProgress());
+        /** Update TextViews for Sets,Legs setting **/
         barSets.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -52,12 +51,10 @@ public class GameSettingsActivity extends AppCompatActivity {
                 else
                     txtSets.setText("Sets: "+i);
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
@@ -73,17 +70,15 @@ public class GameSettingsActivity extends AppCompatActivity {
                 else
                     txtLegs.setText("Legs per Set: "+i);
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
             }
         });
+        /** Start Match, pass Players,GameSettings to GameActivity **/
         Button btnStart=findViewById(R.id.btn_start);
         btnStart.setOnClickListener(v->{
             Intent intent=new Intent(GameSettingsActivity.this,GameActivity.class);

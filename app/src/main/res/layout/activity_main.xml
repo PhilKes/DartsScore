@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".activites.MainActivity"
     android:background="@android:color/black">
 
     <TextView
@@ -59,7 +59,7 @@
             android:layout_height="63dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/background_menu_button"
-            android:text="New Game"
+            android:text="New Player"
             android:textAllCaps="false"
             android:textColor="@color/colorButtonLight"
             android:textSize="24sp"

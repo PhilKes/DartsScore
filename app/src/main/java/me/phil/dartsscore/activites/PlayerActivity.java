@@ -1,4 +1,4 @@
-package me.phil.dartsscore;
+package me.phil.dartsscore.activites;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,11 +16,16 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import me.phil.dartsscore.APIPlayer;
+import me.phil.dartsscore.Player;
+import me.phil.dartsscore.PlayerAdapter;
+import me.phil.dartsscore.R;
+
+/** Player Selection Screen for new Match **/
 public class PlayerActivity extends AppCompatActivity {
 
     ListView lvPlayers;
@@ -29,16 +34,17 @@ public class PlayerActivity extends AppCompatActivity {
     int firstIdx=0;
     public static int _ID=0;
     ArrayList<Player> players;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
-
         lvPlayers=findViewById(R.id.lv_players);
         ArrayList<Player> listPlayers=new ArrayList<>();
         groupFirst=new ArrayList<>();
         listPlayers.add(new Player(-1));
         players=new APIPlayer(getBaseContext()).queryAllPlayers();
+        /** Show Dialog to pick new Player **/
         lvPlayers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -48,6 +54,7 @@ public class PlayerActivity extends AppCompatActivity {
                 /**  ListView to show Players**/
                 LinearLayout linearLayout=new LinearLayout(getBaseContext());
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
+                /** Load Players from Database into the List**/
                 ListView listViewPlayers=new ListView(getBaseContext());
                 ArrayAdapter<Player> adapter=new ArrayAdapter<>(getBaseContext(),R.layout.dialog_list_player,R.id.txt_PlayerName,players);
                 final int playerIDx=i;
@@ -64,6 +71,7 @@ public class PlayerActivity extends AppCompatActivity {
                 linearLayout.addView(input);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 builder.setView(linearLayout);
+                /** Add new Player to database and List**/
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -95,6 +103,7 @@ public class PlayerActivity extends AppCompatActivity {
                         imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
                     }
                 });
+                /** Remove clicked Player from GameList **/
                 builder.setNegativeButton("Remove", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -109,8 +118,8 @@ public class PlayerActivity extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
-                //builder.show();
                 AlertDialog dialog=builder.create();
+                /** Add Player from Database to GameList **/
                 listViewPlayers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view2, int i, long l) {
@@ -130,11 +139,11 @@ public class PlayerActivity extends AppCompatActivity {
                 });
                 dialog.show();
                 input.requestFocus();
-               // imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
             }
         });
         adapterPlayers=new PlayerAdapter(listPlayers,null);
         lvPlayers.setAdapter(adapterPlayers);
+        /** Start GameSettings Activity, pass players and first Player to intent**/
         Button next=findViewById(R.id.btn_next);
         next.setOnClickListener(v->{
             if(listPlayers.size()>1) {
@@ -148,10 +157,11 @@ public class PlayerActivity extends AppCompatActivity {
             else
                 Toast.makeText(this,"Please Add at least 1 Player !",Toast.LENGTH_SHORT).show();
         });
+        /** Go back to Main Menu **/
         Button back=findViewById(R.id.btn_back);
         back.setOnClickListener(v->super.onBackPressed());
     }
-
+    /** Select Player (RadioButton) for starting Player**/
     private void onFirstChecked(int i,boolean checked) {
         if(checked) {
             groupFirst.get(firstIdx).setChecked(false);

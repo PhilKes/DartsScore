@@ -1,4 +1,4 @@
-package me.phil.dartsscore;
+package me.phil.dartsscore.activites;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,20 +24,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import me.phil.dartsscore.APIPlayer;
+import me.phil.dartsscore.Player;
+import me.phil.dartsscore.R;
+import me.phil.dartsscore.TablePlayer;
+
 public class GameActivity extends AppCompatActivity {
 
-    private final static int LEG_WON=181,SET_WON=182,MATCH_WON=183,START_SOUND=184;
     TableLayout tablePlayers;
     ArrayList<TablePlayer> playersView;
     TextView txtCurrScore,txtScore,txtPlayer,txtFinish,txtAvg,txtDoubles,txtAvgAllTime;
     int currPlayer;
     int gameLegs,gameSets,gameScore,gameStart;
     int winner=-1;
-    boolean enteredDoubleDarts=false;
     SoundPool soundPool;
     ArrayList<Integer> soundIDs;
     ArrayList<Player> players;
     LinkedList<Integer> scoreStack;
+
+    /** Special SoundIndexes, HashMap for Finish recommendations **/
+    private final static int LEG_WON=181,SET_WON=182,MATCH_WON=183,START_SOUND=184;
     static final HashMap<Integer,String> finishMap=new HashMap<>();
     static {
         finishMap.put(170,"T20 T20 Bull");		finishMap.put(132,"T20 T16 D12");	 finishMap.put(101,"T17 10 D20");	 	finishMap.put(70,"T18 D8");
@@ -78,22 +84,19 @@ public class GameActivity extends AppCompatActivity {
                 finishMap.put(i,"1 D"+i/2);
         }
     }
-
-    //TODO STACK FOR RETURN LAST THROW
     protected PowerManager.WakeLock mWakeLock;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        /*View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
+        /** Keep Screen on with WakeLock **/
         final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         this.mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
         this.mWakeLock.acquire();
-        players=this.getIntent().getParcelableArrayListExtra("players");
 
+        /** Get Players,GameSettings from Intent **/
+        players=this.getIntent().getParcelableArrayListExtra("players");
         gameScore=getIntent().getIntExtra("score",301);
         gameSets=getIntent().getIntExtra("sets",1);
         gameLegs=getIntent().getIntExtra("legs",1);
@@ -114,6 +117,8 @@ public class GameActivity extends AppCompatActivity {
         System.out.println("Sets: "+gameSets);
         System.out.println("Legs: "+gameLegs);
         tablePlayers=findViewById(R.id.table_players);
+
+        /** Init SoundPool, Score Sounds **/
         AudioAttributes audioAttributes=new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
@@ -126,9 +131,7 @@ public class GameActivity extends AppCompatActivity {
 
         TextView txtGameSets=findViewById(R.id.txt_GameSets);
         txtGameSets.setText("First to: "+gameSets+" Sets ( "+gameLegs+" Legs )");
-        /*ArrayList<Player> players=new ArrayList<>();
-        players.add(new Player(0,"Phil",gameScore,0,0));
-        players.add(new Player(1,"Flo",gameScore,0,0));*/
+        /** Add TableRow for each Player to the Scoreboard**/
         playersView=new ArrayList<>();
         for (int i = 0; i < players.size(); i++) {
             LayoutInflater layoutInflater=(LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -145,13 +148,12 @@ public class GameActivity extends AppCompatActivity {
         txtAvgAllTime=findViewById(R.id.txt_avg_gesamt);
         txtFinish=findViewById(R.id.txt_finish);
         txtCurrScore.setText("");
-        currPlayer=gameStart-1;
+        //currPlayer=gameStart-1;
         switchPlayer(gameStart);
         playSound(START_SOUND);
     }
 
     private void playSound(int id) {
-
         final int sound=soundPool.load(this,soundIDs.get(id),1);
         soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
@@ -160,13 +162,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void selectPlayer(int i) {
-        playersView.get(currPlayer).setSelected(false);
-        currPlayer=i;
-        playersView.get(currPlayer).setSelected(true);
-    }
-
+    /** Add Number to current Score Text if valid **/
     public void onClickNumber(View view) {
         hapticFeedback();
         int number= Integer.parseInt(((Button)view).getText()+"");
@@ -187,6 +183,7 @@ public class GameActivity extends AppCompatActivity {
             txtCurrScore.setText(txtCurrScore.getText().subSequence(0,txtCurrScore.getText().length()-1));
     }
 
+    /** Submit throw from txtCurrScore Text **/
     public void onDoneClick(View view) {
         hapticFeedback();
        try {
@@ -194,18 +191,20 @@ public class GameActivity extends AppCompatActivity {
            scored(score);
        }catch (Exception e){}
     }
+
+    /** Update Score, handle Leg/Set won, switch Player **/
     public void scored(int score){
         TablePlayer player=playersView.get(currPlayer);
         scoreStack.addFirst(score);
         int oldScore=player.getScore();
         if(player.turnScore(score)){
+            /** Leg won **/
             if(player.getScore()==0) {
                 scoreStack=new LinkedList<>();
                 showDoublesDialog(player,score);
                 return;
-                //while(!enteredDoubleDarts);
-                //enteredDoubleDarts=false;
             }
+            /** Bust **/
             else {
                 player.setScore(oldScore);
                 score=0;
@@ -225,6 +224,7 @@ public class GameActivity extends AppCompatActivity {
         switchPlayer((currPlayer+1)%playersView.size());
     }
 
+    /** Dialog to determine how many Darts thrown at Double **/
     private void showDoublesDialog(TablePlayer player,int score) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialogCustom);
         builder.setTitle("Darts at Double");
@@ -239,7 +239,7 @@ public class GameActivity extends AppCompatActivity {
         ArrayAdapter<Integer> adapter=new ArrayAdapter<>(getBaseContext(),R.layout.dialog_list_player,R.id.txt_PlayerName,thrownDarts);
         listViewPlayers.setOnItemClickListener((adapterView, view, i, l) -> {
             player.player.doubleDarts+=thrownDarts[i];
-            //player.player.darts+=thrownDarts[i];
+            /** Update Scoreboard if won Leg**/
             if(player.getScore()==0)
                 legWon(player,score);
             dialog.dismiss();
@@ -247,14 +247,17 @@ public class GameActivity extends AppCompatActivity {
         listViewPlayers.setAdapter(adapter);
         dialog.show();
     }
+
     private void legWon(TablePlayer player,int score){
         player.player.doubleGame +=1;
         System.out.println("Player " + playersView.get(currPlayer).getName() + " won leg");
         if(score > player.player.bestFinish)
             player.player.bestFinish=score;
+        /** Set won **/
         if(player.addLeg()==gameLegs){
             player.setLegs(0);
-            if(player.addSet()==gameSets) { /** GAME OVER **/
+            /** Match won **/
+            if(player.addSet()==gameSets) {
                 playSound(MATCH_WON);
                 System.out.println("Player " + player.getName() + " won the Game!");
                 Toast.makeText(this,player.getName()+" won the Match! ",Toast.LENGTH_LONG).show();
@@ -273,9 +276,9 @@ public class GameActivity extends AppCompatActivity {
             p.setSelected(false);
         }
         player.updateStats();
-        //currPlayer=gameStart-1;
         switchPlayer(gameStart);
     }
+    /** Dialog after Match is over, quit or replay (start GameSettings Acvitity)  **/
     private void showReplayDialog(String playerWon) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialogCustom);
         builder.setTitle(playerWon+" won the Match!")
@@ -301,6 +304,7 @@ public class GameActivity extends AppCompatActivity {
          builder.show();
     }
 
+    /** Deselect (TableRow,Score) currPlayer, select nextPlayer **/
     private void switchPlayer(int nextPlayer) {
         if(currPlayer>=0) {
             playersView.get(currPlayer).setSelected(false);
@@ -314,11 +318,13 @@ public class GameActivity extends AppCompatActivity {
         txtAvg.setText(String.format("%.2f",((player.player.gameAvg/(double)player.player.darts)*3)));
         txtAvgAllTime.setText(String.format("%.2f",(player.player.avg/(double)player.player.games)*3));
         txtDoubles.setText(String.format("%.2f%%%n",(player.player.doubleGame/(double)player.player.doubleDarts)*100));
+        /** Get Finish recommendation if available **/
         String finish=finishMap.get(player.player.score);
         if(finish==null)
             finish="Impossible";
         txtFinish.setText(finish);
     }
+
     @Override
     protected void onDestroy() {
         this.mWakeLock.release();
@@ -327,6 +333,7 @@ public class GameActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    /** Save Match Stats to Database **/
     private void saveStats() {
         APIPlayer api=new APIPlayer(this);
         for (int i = 0; i < players.size(); i++) {
@@ -366,9 +373,9 @@ public class GameActivity extends AppCompatActivity {
 
     private void hapticFeedback() {
         getWindow().getDecorView().performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
-
     }
 
+    /** Withdraw last throw, reselect last Player **/
     public void onBackClicked(View view) {
         hapticFeedback();
         if(!scoreStack.isEmpty()){
@@ -382,6 +389,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /** Show Dialog to Quit Match **/
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialogCustom);
@@ -394,6 +402,7 @@ public class GameActivity extends AppCompatActivity {
                 .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         GameActivity.super.onBackPressed();
+                        saveStats();
                         finish();
                     }
                 });
