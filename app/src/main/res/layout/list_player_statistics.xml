@@ -6,28 +6,17 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginBottom="8dp"
+        android:layout_marginTop="47dp"
         android:background="@drawable/background_red_stroke"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:paddingBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/txt_Name"
-            android:layout_width="206dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_red_rounded"
-            android:padding="8dp"
-            android:text="Phil"
-            android:textColor="@color/colorYellowLight"
-            android:textSize="26sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TableLayout
             android:id="@+id/table_stats"
@@ -37,6 +26,28 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_Name">
+
+            <TableRow
+                android:id="@+id/row_games"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/asg45"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Matches:  "
+                    android:textColor="@color/colorButtonLight"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txt_games"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="23"
+                    android:textColor="@color/colorButtonLight"
+                    android:textSize="18sp" />
+            </TableRow>
 
             <TableRow
                 android:id="@+id/row_won"
@@ -54,33 +65,67 @@
                 <TextView
                     android:id="@+id/txt_won"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="26dp"
                     android:text="10"
                     android:textColor="@color/colorButtonLight"
                     android:textSize="18sp" />
             </TableRow>
 
             <TableRow
-                android:id="@+id/row_games"
+                android:id="@+id/row_legs"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/textView160"
+                    android:id="@+id/textView19"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Matches:"
+                    android:text="Legs:"
                     android:textColor="@color/colorButtonLight"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/txt_games"
+                    android:id="@+id/txt_legs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="23"
                     android:textColor="@color/colorButtonLight"
                     android:textSize="18sp" />
             </TableRow>
+
+            <TableRow
+                android:id="@+id/row_legsWon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Won:"
+                    android:textColor="@color/colorButtonLight"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txt_legsWon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="23"
+                    android:textColor="@color/colorButtonLight"
+                    android:textSize="18sp" />
+            </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/table_stats8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_Name">
 
             <TableRow
                 android:id="@+id/row_avg"
@@ -119,8 +164,8 @@
 
                 <TextView
                     android:id="@+id/txt_doubles"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="71dp"
+                    android:layout_height="26dp"
                     android:text="10%"
                     android:textColor="@color/colorButtonLight"
                     android:textSize="18sp" />
@@ -172,5 +217,18 @@
 
         </TableLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_Name"
+        android:layout_width="206dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:background="@drawable/background_red_rounded_top"
+        android:padding="8dp"
+        android:text="Phil"
+        android:textColor="@color/colorYellowLight"
+        android:textSize="26sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

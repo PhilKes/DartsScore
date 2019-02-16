@@ -17,7 +17,7 @@ public class APIPlayer {
 
     public APIPlayer(Context context) {
         if(database==null)
-            database=new DBPlayer(context);
+            database = new DBPlayer(context);
     }
 
 
@@ -31,6 +31,8 @@ public class APIPlayer {
         values.put(DBPlayer.PLAYER_COL_NAME,name);
         values.put(DBPlayer.PLAYER_COL_GAMES,0);
         values.put(DBPlayer.PLAYER_COL_WON,0);
+        values.put(DBPlayer.PLAYER_COL_LEGS,0);
+        values.put(DBPlayer.PLAYER_COL_LEGS_WON,0);
         values.put(DBPlayer.PLAYER_COL_AVG,0.0);
         values.put(DBPlayer.PLAYER_COL_DOUBLES,0.0);
         values.put(DBPlayer.PLAYER_COL_BEST_FINISH,0);
@@ -55,6 +57,8 @@ public class APIPlayer {
                 DBPlayer.PLAYER_COL_NAME,
                 DBPlayer.PLAYER_COL_GAMES,
                 DBPlayer.PLAYER_COL_WON,
+                DBPlayer.PLAYER_COL_LEGS,
+                DBPlayer.PLAYER_COL_LEGS_WON,
                 DBPlayer.PLAYER_COL_AVG,
                 DBPlayer.PLAYER_COL_DOUBLES,
                 DBPlayer.PLAYER_COL_BEST_FINISH,
@@ -71,7 +75,9 @@ public class APIPlayer {
                     c.getInt(c.getColumnIndexOrThrow(DBPlayer.PLAYER_COL_BEST_FINISH)),
                     c.getInt(c.getColumnIndexOrThrow(DBPlayer.PLAYER_COL_GAMES)),
                     c.getInt(c.getColumnIndexOrThrow(DBPlayer.PLAYER_COL_WON)),
-                    c.getInt(c.getColumnIndexOrThrow(DBPlayer.PLAYER_COL_HIGHEST_SCORE))
+                    c.getInt(c.getColumnIndexOrThrow(DBPlayer.PLAYER_COL_HIGHEST_SCORE)),
+                    c.getInt(c.getColumnIndexOrThrow(DBPlayer.PLAYER_COL_LEGS)),
+                    c.getInt(c.getColumnIndexOrThrow(DBPlayer.PLAYER_COL_LEGS_WON))
             ));
         }
         c.close();
@@ -83,7 +89,7 @@ public class APIPlayer {
         SQLiteDatabase db=database.getWritableDatabase();
         ContentValues args = new ContentValues();
         Player player=queryPlayer("name").get(0);
-        args.put(DBPlayer.PLAYER_COL_GAMES, (player.games+games));
+        args.put(DBPlayer.PLAYER_COL_GAMES, (player.matches +games));
         args.put(DBPlayer.PLAYER_COL_WON, (player.won+won));
         args.put(DBPlayer.PLAYER_COL_AVG, (player.avg+avg)/2.0);
         args.put(DBPlayer.PLAYER_COL_DOUBLES, (player.doubles+doubles)/2.0);
@@ -97,11 +103,13 @@ public class APIPlayer {
         Player playerOld=queryPlayer(player.name).get(0);
         SQLiteDatabase db=database.getWritableDatabase();
         ContentValues args = new ContentValues();
-        args.put(DBPlayer.PLAYER_COL_GAMES, player.games);
+        args.put(DBPlayer.PLAYER_COL_GAMES, player.matches);
         args.put(DBPlayer.PLAYER_COL_WON, player.won);
         args.put(DBPlayer.PLAYER_COL_AVG, player.avg);
         args.put(DBPlayer.PLAYER_COL_DOUBLES, player.doubles);
         args.put(DBPlayer.PLAYER_COL_HIGHEST_SCORE,player.highestScore);
+        args.put(DBPlayer.PLAYER_COL_LEGS,player.legsPlayed);
+        args.put(DBPlayer.PLAYER_COL_LEGS_WON,player.legsWon);
         //if(playerOld.bestFinish<player.bestFinish)
         args.put(DBPlayer.PLAYER_COL_BEST_FINISH, player.bestFinish);
         int rows=db.update(DBPlayer.PLAYER_TABLE,args,DBPlayer.PLAYER_COL_NAME+" = ?",new String[]{player.name});

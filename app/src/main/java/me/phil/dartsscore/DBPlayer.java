@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
 public class DBPlayer extends SQLiteOpenHelper {
 
     public static final String DB_NAME="players.db";
-    public static final int DB_VERSION=1;
+    public static final int DB_VERSION=2;
 
     public DBPlayer(Context context) {
         super(context,DB_NAME,null,DB_VERSION);
@@ -20,12 +20,16 @@ public class DBPlayer extends SQLiteOpenHelper {
             PLAYER_COL_AVG="average",
             PLAYER_COL_DOUBLES="doubles",
             PLAYER_COL_BEST_FINISH="bestFinish",
-            PLAYER_COL_HIGHEST_SCORE="highestScore";
+            PLAYER_COL_HIGHEST_SCORE="highestScore",
+            PLAYER_COL_LEGS="legs",
+            PLAYER_COL_LEGS_WON="legsWon";
 
     private static final String SQL_CREATE_TABLE_PLAYER ="CREATE TABLE "+PLAYER_TABLE +" ("
             + BaseColumns._ID+" INTEGER PRIMARY KEY,"
             +PLAYER_COL_NAME+" TEXT,"
             +PLAYER_COL_GAMES+" INTEGER,"
+            +PLAYER_COL_LEGS+" INTEGER,"
+            +PLAYER_COL_LEGS_WON+" INTEGER,"
             +PLAYER_COL_WON+" INTEGER,"
             +PLAYER_COL_AVG+" DOUBLE,"
             +PLAYER_COL_DOUBLES+" DOUBLE,"
@@ -40,7 +44,9 @@ public class DBPlayer extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        onCreate(sqLiteDatabase);
+    public void onUpgrade(SQLiteDatabase db, int old, int newVersion) {
+        //onCreate(sqLiteDatabase);
+        //db.execSQL("ALTER TABLE "+DBPlayer.PLAYER_TABLE+" ADD COLUMN "+DBPlayer.PLAYER_COL_LEGS_+" INTEGER DEFAULT 0");
+        //db.execSQL("ALTER TABLE "+DBPlayer.PLAYER_TABLE+" ADD COLUMN "+DBPlayer.PLAYER_COL_LEGS_WON+" INTEGER DEFAULT 0");
     }
 }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class PlayerStatsAdapter extends BaseAdapter {
+    //TODO SAVE LEGS / WON LEGS
     ArrayList<Player> listPlayers;
     public PlayerStatsAdapter(ArrayList<Player> listPlayers) {
         this.listPlayers = listPlayers;
@@ -43,15 +44,19 @@ public class PlayerStatsAdapter extends BaseAdapter {
         TextView txtWon=view.findViewById(R.id.txt_won);
         txtWon.setText(p.won+"");
         TextView txtGames=view.findViewById(R.id.txt_games);
-        txtGames.setText(p.games+"");
+        txtGames.setText(p.matches +"");
         TextView txtAvg=view.findViewById(R.id.txt_avg);
-        txtAvg.setText(((p.avg/(double)p.games)*3)+"");
+        txtAvg.setText(((p.avg/(double)p.matches)*3)+"");
         TextView txtDoubles=view.findViewById(R.id.txt_doubles);
-        txtDoubles.setText(String.format("%.2f%%%n",(p.doubles/(double)p.games)*100));
+        txtDoubles.setText(String.format("%.2f%%%n",(p.doubles/(double)p.matches)*100));
         TextView txtFinish=view.findViewById(R.id.txt_finish);
         txtFinish.setText(p.bestFinish+"");
         TextView txtScore=view.findViewById(R.id.txt_score);
         txtScore.setText(p.highestScore+"");
+        TextView txtLegs=view.findViewById(R.id.txt_legs);
+        txtLegs.setText(p.legsPlayed +"");
+        TextView txtWonLegs=view.findViewById(R.id.txt_legsWon);
+        txtWonLegs.setText(p.legsWon+"");
 
         return view;
     }

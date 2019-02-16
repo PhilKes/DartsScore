@@ -217,7 +217,6 @@ public class GameActivity extends AppCompatActivity {
                 showDoublesDialog(player,score);
             playSound(score);
         }
-
         player.player.gameAvg+=score;
         player.player.darts+=3;
         System.out.println("Player "+currPlayer+" scored: "+score);
@@ -250,6 +249,9 @@ public class GameActivity extends AppCompatActivity {
 
     private void legWon(TablePlayer player,int score){
         player.player.doubleGame +=1;
+        player.player.legsWon+=1;
+        for (TablePlayer p :playersView)
+            p.player.legsPlayed+=1;
         System.out.println("Player " + playersView.get(currPlayer).getName() + " won leg");
         if(score > player.player.bestFinish)
             player.player.bestFinish=score;
@@ -316,7 +318,7 @@ public class GameActivity extends AppCompatActivity {
         txtCurrScore.setText("");
         txtPlayer.setText(player.getName());
         txtAvg.setText(String.format("%.2f",((player.player.gameAvg/(double)player.player.darts)*3)));
-        txtAvgAllTime.setText(String.format("%.2f",(player.player.avg/(double)player.player.games)*3));
+        txtAvgAllTime.setText(String.format("%.2f",(player.player.avg/(double)player.player.matches)*3));
         txtDoubles.setText(String.format("%.2f%%%n",(player.player.doubleGame/(double)player.player.doubleDarts)*100));
         /** Get Finish recommendation if available **/
         String finish=finishMap.get(player.player.score);
@@ -339,7 +341,7 @@ public class GameActivity extends AppCompatActivity {
         for (int i = 0; i < players.size(); i++) {
             Player p=players.get(i);
             if(p.darts>0) {
-                p.games++;
+                p.matches++;
                 int avg = p.gameAvg / p.darts;
                 p.avg += avg;
                 if(p.doubleDarts>0)

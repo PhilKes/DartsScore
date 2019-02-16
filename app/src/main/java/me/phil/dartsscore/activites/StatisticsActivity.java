@@ -10,6 +10,8 @@ import me.phil.dartsscore.R;
 
 public class StatisticsActivity extends AppCompatActivity {
 
+    //TODO HIGHLIGHT BEST PLAYER IN CATEGORIES
+    //TODO SYNCHRONIZE DATABASES
     ListView listPlayers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import me.phil.dartsscore.activites.PlayerActivity;
 
 public class Player implements Parcelable{
-    public Player(int id,String name, int score, int legs, int sets,double avg, double doubles, int bestFinish,int games, int won,int highestScore) {
+    public Player(int id, String name, int score, int legs, int sets, double avg, double doubles, int bestFinish, int matches, int won, int highestScore, int legsPlayed, int legsWon) {
         this.id= PlayerActivity._ID++;
         this.name = name;
         this.score = score;
@@ -15,9 +15,11 @@ public class Player implements Parcelable{
         this.avg=avg;
         this.doubles=doubles;
         this.bestFinish=bestFinish;
-        this.games=games;
+        this.matches = matches;
         this.won=won;
         this.highestScore=highestScore;
+        this.legsPlayed = legsPlayed;
+        this.legsWon=legsWon;
     }
     public Player(int score) {
         this.id=PlayerActivity._ID++;
@@ -36,7 +38,7 @@ public class Player implements Parcelable{
     public int id=0;
     public double avg=0.0;
     public double doubles=0.0;
-    public int bestFinish=0, games=0, won=0,darts=0,gameAvg=0,highestScore=0,doubleDarts=0,doubleGame =0;
+    public int bestFinish=0, matches =0, won=0,darts=0,gameAvg=0,highestScore=0,doubleDarts=0,doubleGame =0,legsWon=0, legsPlayed =0;
 
 
     protected Player(Parcel in) {
@@ -48,13 +50,15 @@ public class Player implements Parcelable{
         avg = in.readDouble();
         doubles = in.readDouble();
         bestFinish = in.readInt();
-        games = in.readInt();
+        matches = in.readInt();
         won = in.readInt();
         darts = in.readInt();
         gameAvg = in.readInt();
         highestScore = in.readInt();
         doubleDarts = in.readInt();
         doubleGame = in.readInt();
+        legsWon = in.readInt();
+        legsPlayed = in.readInt();
     }
 
     @Override
@@ -67,13 +71,15 @@ public class Player implements Parcelable{
         dest.writeDouble(avg);
         dest.writeDouble(doubles);
         dest.writeInt(bestFinish);
-        dest.writeInt(games);
+        dest.writeInt(matches);
         dest.writeInt(won);
         dest.writeInt(darts);
         dest.writeInt(gameAvg);
         dest.writeInt(highestScore);
         dest.writeInt(doubleDarts);
         dest.writeInt(doubleGame);
+        dest.writeInt(legsWon);
+        dest.writeInt(legsPlayed);
     }
 
     @Override
