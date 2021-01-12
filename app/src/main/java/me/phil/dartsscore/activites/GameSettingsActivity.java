@@ -29,7 +29,7 @@ public class GameSettingsActivity extends AppCompatActivity {
         spinner.setSelection(1);
         /** SeekBars for Sets,Legs **/
         SeekBar barSets=findViewById(R.id.sbar_sets);
-        barSets.setProgress(2);
+        barSets.setProgress(1);
         SeekBar barLegs=findViewById(R.id.sbar_legs);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             barSets.setMin(1);

@@ -89,6 +89,8 @@ public class PlayerActivity extends AppCompatActivity {
                                 rBtn.setEnabled(true);
                                 rBtn.setOnCheckedChangeListener((v,checked)->onFirstChecked(i,checked));
                                 groupFirst.add(rBtn);
+                                if(listPlayers.size()==2)
+                                    onFirstChecked(0,true);
                             }
                         }
                         else{
@@ -134,6 +136,8 @@ public class PlayerActivity extends AppCompatActivity {
                         rBtn.setEnabled(true);
                         rBtn.setOnCheckedChangeListener((v,checked)->onFirstChecked(playerIDx,checked));
                         groupFirst.add(rBtn);
+                        if(listPlayers.size()==2)
+                            onFirstChecked(0,true);
                         dialog.dismiss();
                     }
                 });

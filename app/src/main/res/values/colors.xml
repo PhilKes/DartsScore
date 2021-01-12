@@ -14,5 +14,7 @@
     <color name="colorButtonDark">#b1b3b9</color>
     <color name="colorButtonDarkLight">#4f3cb6</color>
     <color name="colorButtonDarkDark">#2c1c87</color>
+    <color name="colorButtonGreenLight">#48B63C</color>
+    <color name="colorButtonGreenDark">#23871C</color>
     <color name="colorYellowDark">#b69e00</color>
 </resources>

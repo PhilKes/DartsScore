@@ -213,8 +213,9 @@ public class GameActivity extends AppCompatActivity {
         }else{
             if(score > player.player.highestScore)
                 player.player.highestScore=score;
-            if(player.getScore()<=50 )
-                showDoublesDialog(player,score);
+            //TODO Add Option to Record Doubles or not in OptionsActivity
+            /*if(player.getScore()<=50 )
+                showDoublesDialog(player,score);*/
             playSound(score);
         }
         player.player.gameAvg+=score;
