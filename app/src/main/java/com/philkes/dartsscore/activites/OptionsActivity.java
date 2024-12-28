@@ -1,12 +1,12 @@
-package me.phil.dartsscore.activites;
+package com.philkes.dartsscore.activites;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import me.phil.dartsscore.APIPlayer;
-import me.phil.dartsscore.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.philkes.dartsscore.APIPlayer;
+import com.philkes.dartsscore.R;
 
 public class OptionsActivity extends AppCompatActivity {
 

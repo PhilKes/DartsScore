@@ -1,9 +1,8 @@
-package me.phil.dartsscore;
+package com.philkes.dartsscore;
 
-import android.support.constraint.ConstraintLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class TablePlayer {
     public ConstraintLayout layout;

@@ -1,4 +1,4 @@
-package me.phil.dartsscore;
+package com.philkes.dartsscore;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

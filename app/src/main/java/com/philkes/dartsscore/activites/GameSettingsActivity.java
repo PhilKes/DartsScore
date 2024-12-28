@@ -1,8 +1,7 @@
-package me.phil.dartsscore.activites;
+package com.philkes.dartsscore.activites;
 
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -10,9 +9,12 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
-import me.phil.dartsscore.Player;
-import me.phil.dartsscore.R;
+import com.philkes.dartsscore.Player;
+import com.philkes.dartsscore.R;
 
 /** Score,Sets,Legs settings for new Match **/
 public class GameSettingsActivity extends AppCompatActivity {

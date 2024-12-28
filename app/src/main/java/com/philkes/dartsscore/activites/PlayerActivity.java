@@ -1,10 +1,10 @@
-package me.phil.dartsscore.activites;
+package com.philkes.dartsscore.activites;
+
+import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -18,12 +18,15 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 
-import me.phil.dartsscore.APIPlayer;
-import me.phil.dartsscore.Player;
-import me.phil.dartsscore.PlayerAdapter;
-import me.phil.dartsscore.R;
+import com.philkes.dartsscore.APIPlayer;
+import com.philkes.dartsscore.Player;
+import com.philkes.dartsscore.PlayerAdapter;
+import com.philkes.dartsscore.R;
 
 /** Player Selection Screen for new Match **/
 public class PlayerActivity extends AppCompatActivity {
@@ -122,27 +125,25 @@ public class PlayerActivity extends AppCompatActivity {
                 });
                 AlertDialog dialog=builder.create();
                 /** Add Player from Database to GameList **/
-                listViewPlayers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view2, int i, long l) {
-                        if(listPlayers.get(playerIDx).score==-1)
-                            listPlayers.add(new Player(-1));
-                        else
-                            players.add(listPlayers.get(playerIDx));
-                        listPlayers.set(playerIDx,api.queryPlayer(players.get(i).name).get(0));
-                        players.removeIf(p->p.name.equals(players.get(i).name));
-                        adapterPlayers.notifyDataSetChanged();
-                        RadioButton rBtn=view.findViewById(R.id.rbtn_first);
-                        rBtn.setEnabled(true);
-                        rBtn.setOnCheckedChangeListener((v,checked)->onFirstChecked(playerIDx,checked));
-                        groupFirst.add(rBtn);
-                        if(listPlayers.size()==2)
-                            onFirstChecked(0,true);
-                        dialog.dismiss();
-                    }
+                listViewPlayers.setOnItemClickListener((adapterView1, view2, i1, l1) -> {
+                    if(listPlayers.get(playerIDx).score==-1)
+                        listPlayers.add(new Player(-1));
+                    else
+                        players.add(listPlayers.get(playerIDx));
+                    listPlayers.set(playerIDx,api.queryPlayer(players.get(i1).name).get(0));
+                    players.removeIf(p->p.name.equals(players.get(i1).name));
+                    adapterPlayers.notifyDataSetChanged();
+                    RadioButton rBtn=view.findViewById(R.id.rbtn_first);
+                    rBtn.setEnabled(true);
+                    rBtn.setOnCheckedChangeListener((v,checked)->onFirstChecked(playerIDx,checked));
+                    groupFirst.add(rBtn);
+                    if(listPlayers.size()==2)
+                        onFirstChecked(0,true);
+                    dialog.dismiss();
                 });
-                dialog.show();
                 input.requestFocus();
+                dialog.getWindow().setSoftInputMode(SOFT_INPUT_STATE_VISIBLE);
+                dialog.show();
             }
         });
         adapterPlayers=new PlayerAdapter(listPlayers,null);

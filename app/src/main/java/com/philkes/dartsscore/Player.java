@@ -1,13 +1,13 @@
-package me.phil.dartsscore;
+package com.philkes.dartsscore;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import me.phil.dartsscore.activites.PlayerActivity;
+import com.philkes.dartsscore.activites.PlayerActivity;
 
 public class Player implements Parcelable{
     public Player(int id, String name, int score, int legs, int sets, double avg, double doubles, int bestFinish, int matches, int won, int highestScore, int legsPlayed, int legsWon) {
-        this.id= PlayerActivity._ID++;
+        this.id= id;
         this.name = name;
         this.score = score;
         this.legs = legs;

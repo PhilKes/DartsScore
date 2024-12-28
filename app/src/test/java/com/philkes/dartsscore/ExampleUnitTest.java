@@ -1,4 +1,4 @@
-package me.phil.dartsscore;
+package com.philkes.dartsscore;
 
 import org.junit.Test;
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.phil.dartsscore">
+    package="com.philkes.dartsscore">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -12,18 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activites.MainActivity">
+        <activity android:name="com.philkes.dartsscore.activites.MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activites.GameActivity" />
-        <activity android:name=".activites.PlayerActivity" />
-        <activity android:name=".activites.GameSettingsActivity" />
-        <activity android:name=".activites.StatisticsActivity" />
-        <activity android:name=".activites.OptionsActivity"></activity>
+        <activity android:name="com.philkes.dartsscore.activites.GameActivity" />
+        <activity android:name="com.philkes.dartsscore.activites.PlayerActivity" />
+        <activity android:name="com.philkes.dartsscore.activites.GameSettingsActivity" />
+        <activity android:name="com.philkes.dartsscore.activites.StatisticsActivity" />
+        <activity android:name="com.philkes.dartsscore.activites.OptionsActivity"></activity>
     </application>
 
 </manifest>

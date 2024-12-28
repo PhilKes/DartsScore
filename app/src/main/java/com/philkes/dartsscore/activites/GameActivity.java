@@ -1,4 +1,4 @@
-package me.phil.dartsscore.activites;
+package com.philkes.dartsscore.activites;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.PowerManager;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
@@ -20,14 +17,18 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import me.phil.dartsscore.APIPlayer;
-import me.phil.dartsscore.Player;
-import me.phil.dartsscore.R;
-import me.phil.dartsscore.TablePlayer;
+import com.philkes.dartsscore.APIPlayer;
+import com.philkes.dartsscore.Player;
+import com.philkes.dartsscore.R;
+import com.philkes.dartsscore.TablePlayer;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -92,7 +93,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         /** Keep Screen on with WakeLock **/
         final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        this.mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
+        this.mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "dartsscore:wakelock");
         this.mWakeLock.acquire();
 
         /** Get Players,GameSettings from Intent **/
@@ -120,8 +121,8 @@ public class GameActivity extends AppCompatActivity {
 
         /** Init SoundPool, Score Sounds **/
         AudioAttributes audioAttributes=new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .build();
         soundPool=new SoundPool.Builder()
                 .setMaxStreams(1)
@@ -318,9 +319,12 @@ public class GameActivity extends AppCompatActivity {
         txtScore.setText(player.getScore()+"");
         txtCurrScore.setText("");
         txtPlayer.setText(player.getName());
-        txtAvg.setText(String.format("%.2f",((player.player.gameAvg/(double)player.player.darts)*3)));
-        txtAvgAllTime.setText(String.format("%.2f",(player.player.avg/(double)player.player.matches)*3));
-        txtDoubles.setText(String.format("%.2f%%%n",(player.player.doubleGame/(double)player.player.doubleDarts)*100));
+        Double avg = (player.player.gameAvg / (double) player.player.darts) * 3;
+        txtAvg.setText(avg.isNaN() ? "-": String.format("%.2f", avg));
+        Double avgAllTime = (player.player.avg / (double) player.player.matches) * 3;
+        txtAvgAllTime.setText(avgAllTime.isNaN() ? "-": String.format("%.2f", avgAllTime));
+        Double avgDoubles = (player.player.doubleGame / (double) player.player.doubleDarts) * 100;
+        txtDoubles.setText(avgDoubles.isNaN() ? "-": String.format("%.2f%%%n", avgDoubles));
         /** Get Finish recommendation if available **/
         String finish=finishMap.get(player.player.score);
         if(finish==null)

@@ -1,12 +1,13 @@
-package me.phil.dartsscore.activites;
+package com.philkes.dartsscore.activites;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import me.phil.dartsscore.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.philkes.dartsscore.R;
 
 /**  Main Menu Screen **/
 public class MainActivity extends AppCompatActivity {

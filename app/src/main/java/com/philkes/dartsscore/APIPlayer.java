@@ -1,4 +1,4 @@
-package me.phil.dartsscore;
+package com.philkes.dartsscore;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -21,6 +21,15 @@ public class APIPlayer {
     }
 
 
+    public void deletePlayer(Integer id) {
+        SQLiteDatabase db=database.getWritableDatabase();
+        String whereClause = BaseColumns._ID + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(id)};
+        db.delete(DBPlayer.PLAYER_TABLE, whereClause, whereArgs);
+        db.close();
+        Log.d(TAG, "deletePlayer: DELETED Player\tid: "+id);
+    }
+
     public long createPlayer(String name){
         if(queryPlayer(name).size()>0) {
             Log.d(TAG, "createPlayer: COULD NOT CREATE Player\tName: "+name+" already exists");
@@ -42,6 +51,7 @@ public class APIPlayer {
         Log.d(TAG, "createPlayer: CREATED Player\tName: "+name);
         return newRowId;
     }
+
     public boolean resetAll(){
         SQLiteDatabase db=database.getWritableDatabase();
         database.onUpgrade(db,0,0);
@@ -69,7 +79,8 @@ public class APIPlayer {
         Cursor c= db.query(DBPlayer.PLAYER_TABLE,projection,selection,args,null,null,null);
         ArrayList<Player> players=new ArrayList<>();
         while(c.moveToNext()){
-            players.add(new Player(0,c.getString(c.getColumnIndexOrThrow(DBPlayer.PLAYER_COL_NAME)), 0, 0, 0,
+            players.add(new Player(c.getInt(c.getColumnIndexOrThrow(BaseColumns._ID)),
+                    c.getString(c.getColumnIndexOrThrow(DBPlayer.PLAYER_COL_NAME)), 0, 0, 0,
                     c.getDouble(c.getColumnIndexOrThrow(DBPlayer.PLAYER_COL_AVG)),
                     c.getDouble(c.getColumnIndexOrThrow(DBPlayer.PLAYER_COL_DOUBLES)),
                     c.getInt(c.getColumnIndexOrThrow(DBPlayer.PLAYER_COL_BEST_FINISH)),

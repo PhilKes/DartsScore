@@ -1,12 +1,13 @@
-package me.phil.dartsscore.activites;
+package com.philkes.dartsscore.activites;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import me.phil.dartsscore.APIPlayer;
-import me.phil.dartsscore.PlayerStatsAdapter;
-import me.phil.dartsscore.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.philkes.dartsscore.APIPlayer;
+import com.philkes.dartsscore.PlayerStatsAdapter;
+import com.philkes.dartsscore.R;
 
 public class StatisticsActivity extends AppCompatActivity {
 
