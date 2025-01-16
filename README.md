@@ -1,5 +1,5 @@
 # DartsScore
-#### See Releases to download .APK:  [DartsScore App Releases](https://github.com/PhilKes/DartsScore/releases/tag/1.0)
+#### See Releases to download .APK:  [DartsScore App Releases](https://github.com/PhilKes/DartsScore/releases)
     Dart Scoreboard App for Android
     -Including Statistics database tracking Average,Doubles,...
     -Score sounds
